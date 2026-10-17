@@ -1,0 +1,894 @@
+
+<!DOCTYPE html>
+<html lang="af">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vir my Lyfie 💗</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: "Segoe UI", sans-serif;
+    background: linear-gradient(135deg, #ffe5f0, #e0efff, #fff6d5, #e5f7e9);
+    color: #6888b7;
+    padding: 25px 15px 50px;
+}
+
+header {
+    text-align: center;
+    padding: 25px 10px;
+}
+
+header .heart {
+    font-size: 48px;
+}
+
+h1 {
+    font-size: clamp(28px, 6vw, 40px);
+    margin: 10px 0;
+}
+
+header p {
+    color: #bd82a3;
+}
+
+.menu {
+    max-width: 520px;
+    margin: 15px auto 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.menu-button {
+    width: 100%;
+    padding: 22px 18px;
+    border: 2px solid rgba(255,255,255,0.9);
+    border-radius: 22px;
+    font-family: inherit;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 7px 18px rgba(130, 130, 170, 0.12);
+    transition: transform 0.2s;
+}
+
+.menu-button:hover:not(:disabled) {
+    transform: translateY(-3px);
+}
+
+.gallery-button {
+    background: #f8bdd4;
+    color: #80445f;
+}
+
+.letter-button {
+    background: #fff0a9;
+    color: #866a35;
+}
+
+.lock-button {
+    background: #bedff9;
+    color: #496c91;
+}
+
+.lock-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.75;
+}
+
+.hint {
+    font-size: 13px;
+    font-weight: normal;
+    display: block;
+    margin-top: 7px;
+}
+
+.section {
+    display: none;
+    max-width: 750px;
+    margin: 35px auto;
+    padding: 22px;
+    border-radius: 25px;
+    background: rgba(255,255,255,0.76);
+    box-shadow: 0 8px 25px rgba(140,130,170,0.12);
+}
+
+.section.visible {
+    display: block;
+    animation: appear 0.4s ease;
+}
+
+.section h2 {
+    text-align: center;
+    margin-top: 5px;
+}
+
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.photo-card {
+    background: white;
+    border: 3px solid #f6c8dc;
+    border-radius: 17px;
+    padding: 7px;
+    overflow: hidden;
+}
+
+.photo-card img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    border-radius: 11px;
+}
+
+.caption {
+    text-align: center;
+    font-size: 12px;
+    color: #a77899;
+    padding: 8px 2px 3px;
+}
+
+.letter-paper {
+    background: #fff0a9;
+    color: #795c45;
+    border-radius: 22px;
+    padding: clamp(24px, 6vw, 45px);
+    line-height: 1.9;
+    font-size: 18px;
+    border: 2px solid #f8df85;
+    box-shadow: 0 7px 20px rgba(160, 130, 60, 0.12);
+}
+
+.letter-paper .letter-heart {
+    text-align: center;
+    font-size: 35px;
+}
+
+.letter-paper p {
+    white-space: pre-line;
+}
+
+.back-button {
+    display: block;
+    margin: 25px auto 0;
+    border: none;
+    border-radius: 30px;
+    padding: 12px 22px;
+    background: #e9dafa;
+    color: #775b9d;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#unlock-message {
+    text-align: center;
+    color: #8e78ac;
+    font-size: 13px;
+    margin-top: -18px;
+    margin-bottom: 28px;
+}
+
+footer {
+    text-align: center;
+    color: #bd8eaa;
+    margin-top: 35px;
+    font-size: 13px;
+}
+
+@keyframes appear {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 360px) {
+    .photo-grid {
+        gap: 7px;
+    }
+
+    .section {
+        padding: 12px;
+    }
+
+    .letter-paper {
+        font-size: 16px;
+    }
+}
+
+/* SECRET CHAPTER — DARK ROMANCE */
+
+.secret-screen {
+    display: none;
+    max-width: 520px;
+    margin: 30px auto;
+    padding: 28px 20px;
+    text-align: center;
+    color: #f8e7ed;
+    background: linear-gradient(145deg, #21151f, #100e16, #30121f);
+    border: 1px solid #704052;
+    border-radius: 25px;
+    box-shadow: 0 12px 40px rgba(30, 0, 15, 0.3);
+}
+
+.secret-screen.visible {
+    display: block;
+    animation: appear 0.4s ease;
+}
+
+.secret-screen h2 {
+    color: #f0a7bd;
+    letter-spacing: 1px;
+}
+
+.secret-screen p {
+    line-height: 1.8;
+}
+
+.secret-hint {
+    margin: 24px 0;
+    padding: 18px;
+    color: #f4d5df;
+    background: rgba(180, 70, 110, 0.13);
+    border: 1px solid #754054;
+    border-radius: 16px;
+    font-style: italic;
+}
+
+.secret-input {
+    width: 100%;
+    padding: 14px;
+    margin: 10px 0;
+    color: #fff0f5;
+    background: #211722;
+    border: 1px solid #a05b77;
+    border-radius: 12px;
+    font-size: 16px;
+    outline: none;
+}
+
+.secret-input:focus {
+    border-color: #f0a7bd;
+}
+
+.secret-submit {
+    padding: 13px 25px;
+    margin: 10px 0;
+    color: #26121c;
+    background: #e9a3bb;
+    border: none;
+    border-radius: 30px;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.secret-message {
+    min-height: 25px;
+    color: #f2a9c2;
+    font-size: 14px;
+}
+
+.secret-photo-frame {
+    padding: 10px;
+    margin-top: 20px;
+    background: #21151f;
+    border: 1px solid #704052;
+    border-radius: 20px;
+}
+
+.secret-photo {
+    display: block;
+    width: 100%;
+    max-height: 65vh;
+    aspect-ratio: 3 / 4;
+    object-fit: contain;
+    background: #100e16;
+    border-radius: 13px;
+    filter: blur(18px);
+    transition: filter 0.5s ease;
+    cursor: pointer;
+}
+
+.secret-photo.revealed {
+    filter: blur(0);
+}
+
+.photo-instruction {
+    color: #e6b4c5;
+    font-size: 13px;
+    margin: 14px 0;
+}
+
+.secret-navigation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+}
+
+.secret-nav-button {
+    padding: 11px 17px;
+    color: #f8e7ed;
+    background: #402334;
+    border: 1px solid #89506a;
+    border-radius: 25px;
+    cursor: pointer;
+}
+
+.secret-nav-button:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+.secret-counter {
+    color: #f0a7bd;
+    font-size: 14px;
+}
+
+.secret-back {
+    color: #d7bfd0;
+    background: transparent;
+    border: 1px solid #704052;
+}
+
+
+/* FAVOURITE PHOTO CHALLENGE */
+
+.favorite-panel {
+    display: none;
+    margin-top: 28px;
+    padding: 22px 16px;
+    background: linear-gradient(145deg, #301827, #17121c);
+    border: 1px solid #a15b79;
+    border-radius: 20px;
+    color: #f8e7ed;
+}
+
+.favorite-panel.visible {
+    display: block;
+    animation: appear 0.4s ease;
+}
+
+.favorite-panel h3 {
+    color: #f0a7bd;
+}
+
+.favorite-select {
+    width: 100%;
+    padding: 13px;
+    margin: 12px 0;
+    border: 1px solid #a15b79;
+    border-radius: 12px;
+    background: #211722;
+    color: #fff0f5;
+    font-size: 15px;
+}
+
+.favorite-message {
+    color: #f0a7bd;
+    font-size: 14px;
+    min-height: 20px;
+}
+
+#return-home-button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="heart">💗🦋💙</div>
+    <h1>Wat wil jy eerste sien, Lyfie?</h1>
+    <p>Elke knoppie het iets spesiaal vir jou ♡</p>
+</header>
+
+<nav class="menu">
+
+    <button class="menu-button gallery-button"
+            onclick="openSection('gallery')">
+        📸 Ons mooiste memories
+        <span class="hint">10 foto's van ons twee ♡</span>
+    </button>
+
+    <button class="menu-button letter-button"
+            onclick="openSection('letter')">
+        💌 'n Briefie vir my Lyfie
+        <span class="hint">Net iets wat ek vir jou wil sê ♡</span>
+    </button>
+
+    <button class="menu-button lock-button"
+            id="third-button"
+            disabled
+            onclick="openThird()">
+        🔒 Knoppie 3
+        <span class="hint" id="lock-hint">
+            Maak eers die ander twee oop, mooi man 🤭
+        </span>
+    </button>
+
+</nav>
+
+<p id="unlock-message">
+    💕 Twee klein verrassings wag eerste vir jou.
+</p>
+
+<!-- GALLERY -->
+<section class="section" id="gallery">
+    <h2>Ons twee, my gunsteling memories 📸</h2>
+    <p style="text-align:center; color:#b184a2;">
+        Elke foto, 'n klein stukkie van ons storie ♡
+    </p>
+
+    <div class="photo-grid">
+
+        <div class="photo-card">
+            <img src="photo1.jpeg" alt="Ons foto 1">
+            <div class="caption">My gunsteling mens 💗</div>
+        </div>
+
+        <div class="photo-card">
+            <img src="photo2.jpeg" alt="Ons foto 2">
+            <div class="caption">Net ek en jy 🩵</div>
+        </div>
+
+        <div class="photo-card">
+            <img src="photo3.jpeg" alt="Ons foto 3">
+            <div class="caption">Klein oomblikke 💕</div>
+        </div>
+
+        <div class="photo-card">
+            <img src="photo4.jpeg" alt="Ons foto 4">
+            <div class="caption">My Lyfie 🦋</div>
+        </div>
+
+        <div class="photo-card">
+            <img src="photo5.jpeg" alt="Ons foto 5">
+            <div class="caption">Nog 'n mooi memory 💗</div>
+        </div>
+
+        <div class="photo-card">
+            <img src="photo6.jpeg" alt="Ons foto 6">
+            <div class="caption">Saam met jou 🩵</div>
+        </div>
+
+        <div class="photo-card">
+            <img src="photo7.jpeg" alt="Ons foto 7">
+            <div class="caption">My glimlag se rede 💕</div>
+        </div>
+
+        <div class="photo-card">
+            <img src="photo8.jpeg" alt="Ons foto 8">
+            <div class="caption">Net ons ♡</div>
+        </div>
+
+        <div class="photo-card">
+            <img src="photo9.jpeg" alt="Ons foto 9">
+            <div class="caption">My mooi mens 💗</div>
+        </div>
+
+        <div class="photo-card">
+            <img src="photo10.jpeg" alt="Ons foto 10">
+            <div class="caption">En nog baie memories 🩵</div>
+        </div>
+
+    </div>
+
+    <button class="back-button" onclick="closeSection('gallery')">
+        Terug na die knoppies ♡
+    </button>
+</section>
+
+<!-- LOVE LETTER -->
+<section class="section" id="letter">
+    <h2>'n Briefie vir my Lyfie 💌</h2>
+
+    <div class="letter-paper">
+        <div class="letter-heart">💛🌼💛</div>
+
+        <p>Ek love briefies vir jou skryf, dis die beste ding onder die son, maar die is nie regtig n groot briefie nie, ek wil jou net remind dat my oogies net vir jou is en dat ek elke dag net meer en meer vir jou val, eks ongelooflik lief vir jou my lyfie!!</p>
+
+        <div class="letter-heart">💗</div>
+    </div>
+
+    <button class="back-button" onclick="closeSection('letter')">
+        Terug na die knoppies ♡
+    </button>
+</section>
+
+<!-- SECRET PASSWORD SCREEN -->
+<section class="secret-screen" id="password-screen">
+    <div style="font-size:45px;">🖤🔥</div>
+
+    <h2>Die geheime kant van ons...</h2>
+
+    <p>
+        Jy het tot hier gekom, Lyfie. Maar hierdie deel
+        is net vir jou as jy die antwoord ken. 💋
+    </p>
+
+    <div class="secret-hint">
+        "As ek die liedjie hoor, dink ek gaan jou,
+        dit voel soos vuur."
+    </div>
+
+    <p>Wat is die geheime wagwoord, mooi man? 🔥</p>
+
+    <form id="password-form">
+        <input
+            class="secret-input"
+            id="password-input"
+            type="password"
+            placeholder="Tik die wagwoord..."
+            autocomplete="off"
+            required
+        >
+
+        <button class="secret-submit" type="submit">
+            Ontsluit 🔥
+        </button>
+    </form>
+
+    <p class="secret-message" id="password-message"
+       aria-live="polite"></p>
+
+   
+<button class="back-button secret-back"
+        id="return-home-button"
+        disabled
+        onclick="window.location.href='index.html'">
+    Terug na die homescreen ♡
+</button>
+</section>
+
+<!-- SECRET GALLERY -->
+<section class="secret-screen" id="secret-gallery">
+    <div style="font-size:40px;">🔥🖤</div>
+
+    <h2>Net vir my Lyfie...</h2>
+
+    <p>Elke foto het sy eie klein geheim. Tik op die foto. 💋</p>
+
+    <div class="secret-photo-frame">
+        <img
+            id="secret-photo"
+            class="secret-photo"
+            src="spicy1.jpg"
+            alt="Geheime foto"
+            title="Tik om die foto te onthul"
+        >
+    </div>
+
+
+<!-- CHOOSE YOUR FAVOURITE PHOTO -->
+
+<div class="favorite-panel" id="favorite-panel">
+
+    <div style="font-size:35px;">💗🖤💗</div>
+
+    <h3>Nou, kies jou gunsteling, Lyfie...</h3>
+
+    <p>
+        Jy het al tien foto's gesien! 🤭
+        Watter een is jou heel gunsteling?
+    </p>
+
+    <select class="favorite-select" id="favorite-select">
+        <option value="">Kies jou gunsteling foto...</option>
+        <option value="1">Foto 1 💋</option>
+        <option value="2">Foto 2 💋</option>
+        <option value="3">Foto 3 💋</option>
+        <option value="4">Foto 4 💋</option>
+        <option value="5">Foto 5 💋</option>
+        <option value="6">Foto 6 💋</option>
+        <option value="7">Foto 7 💋</option>
+        <option value="8">Foto 8 💋</option>
+        <option value="9">Foto 9 💋</option>
+        <option value="10">Foto 10 💋</option>
+    </select>
+
+    <button class="secret-submit"
+            id="confirm-favorite"
+            onclick="confirmFavorite()">
+        Dis my gunsteling! 💗
+    </button>
+
+    <p class="favorite-message"
+       id="favorite-message"
+       aria-live="polite"></p>
+
+</div>
+
+
+    <p class="photo-instruction" id="photo-instruction">
+        Tik op die foto om dit te onthul 🖤
+    </p>
+
+    <div class="secret-navigation">
+        <button class="secret-nav-button"
+                id="previous-photo"
+                onclick="changePhoto(-1)">
+            ← Vorige
+        </button>
+
+        <span class="secret-counter" id="photo-counter">
+            1 / 10
+        </span>
+
+        <button class="secret-nav-button"
+                id="next-photo"
+                onclick="changePhoto(1)">
+            Volgende →
+        </button>
+    </div>
+
+    <button class="back-button secret-back"
+            onclick="closeSecretScreens()">
+        Terug na die knoppies ♡
+    </button>
+</section>
+
+<footer>
+    Gemaak met liefde, net vir my Lyfie ♡
+</footer>
+
+<script>
+const opened = {
+    gallery: false,
+    letter: false
+};
+
+function openSection(id) {
+    document.getElementById(id).classList.add("visible");
+
+    opened[id] = true;
+
+    updateLock();
+
+    document.getElementById(id).scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+}
+
+function closeSection(id) {
+    document.getElementById(id).classList.remove("visible");
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+function updateLock() {
+    const unlocked = opened.gallery && opened.letter;
+    const button = document.getElementById("third-button");
+    const hint = document.getElementById("lock-hint");
+    const message = document.getElementById("unlock-message");
+
+    button.disabled = !unlocked;
+
+    if (unlocked) {
+        button.innerHTML =
+            '💝 Knoppie 3 <span class="hint">Jy het dit verdien, Lyfie! ✨</span>';
+
+        hint.textContent = "Jy kan nou verder gaan ♡";
+        message.textContent =
+            "Awww, jy het albei oopgemaak! Knoppie 3 is nou ontsluit 💗";
+
+        button.style.background = "#bfe9ce";
+        button.style.color = "#47795a";
+    }
+}
+
+
+let passwordAttempts = 0;
+let passwordLocked = false;
+
+function openThird() {
+    if (!opened.gallery || !opened.letter) {
+        return;
+    }
+
+    if (passwordLocked) {
+        alert("Jou drie kanse is verby, Lyfie. 🖤");
+        return;
+    }
+
+    document.getElementById("password-screen").classList.add("visible");
+
+    document.getElementById("password-screen").scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+}
+
+document.getElementById("password-form").addEventListener(
+    "submit",
+    function(event) {
+        event.preventDefault();
+
+        if (passwordLocked) {
+            return;
+        }
+
+        const input = document.getElementById("password-input");
+        const message = document.getElementById("password-message");
+
+        const guess = input.value.trim().toLowerCase();
+        passwordAttempts++;
+
+        if (guess === "fire and smoke") {
+
+            document.getElementById("password-screen")
+                .classList.remove("visible");
+
+            document.getElementById("secret-gallery")
+                .classList.add("visible");
+
+            currentPhoto = 1;
+            showPhoto();
+
+            document.getElementById("secret-gallery")
+                .scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+
+            input.value = "";
+            return;
+        }
+
+        const remaining = 3 - passwordAttempts;
+        input.value = "";
+
+        if (remaining > 0) {
+            message.textContent =
+                "Nie heeltemal nie, Lyfie... 😏 " +
+                remaining + " kans(e) oor.";
+        } else {
+            passwordLocked = true;
+            input.disabled = true;
+
+            document.querySelector("#password-form button")
+                .disabled = true;
+
+            message.textContent =
+                "Oeps! Jou drie kanse is verby. 🖤";
+
+            document.querySelector("#password-form button")
+                .style.opacity = "0.4";
+        }
+    }
+);
+
+let currentPhoto = 1;
+
+const revealedPhotos = new Set();
+
+function showPhoto() {
+    const photo = document.getElementById("secret-photo");
+
+    photo.classList.remove("revealed");
+    photo.src = "spicy" + currentPhoto + ".jpeg";
+
+    if (revealedPhotos.has(currentPhoto)) {
+        photo.classList.add("revealed");
+    }
+
+    document.getElementById("photo-counter").textContent =
+        currentPhoto + " / 10";
+
+    document.getElementById("photo-instruction").textContent =
+        revealedPhotos.has(currentPhoto)
+        ? "Hier is jou foto, Lyfie 🖤"
+        : "Tik op die foto om dit te onthul 🖤";
+
+    document.getElementById("previous-photo").disabled =
+        currentPhoto === 1;
+
+    document.getElementById("next-photo").disabled =
+        currentPhoto === 10;
+}
+
+document.getElementById("secret-photo").addEventListener(
+    "click",
+    function() {
+        revealedPhotos.add(currentPhoto);
+		updateFavoritePrompt();
+        this.classList.add("revealed");
+
+        document.getElementById("photo-instruction").textContent =
+            "Hier is jou foto, Lyfie 🖤";
+    }
+);
+
+function changePhoto(direction) {
+    const next = currentPhoto + direction;
+
+    if (next < 1 || next > 10) {
+        return;
+    }
+
+    currentPhoto = next;
+    showPhoto();
+}
+
+
+let favoriteChosen = false;
+
+function updateFavoritePrompt() {
+    if (revealedPhotos.size === 10) {
+        document.getElementById("favorite-panel")
+            .classList.add("visible");
+
+        document.getElementById("favorite-panel")
+            .scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+    }
+}
+
+function confirmFavorite() {
+    const choice = document.getElementById("favorite-select").value;
+    const message = document.getElementById("favorite-message");
+
+    if (revealedPhotos.size !== 10) {
+        message.textContent =
+            "Kyk eers na al tien foto's, Lyfie! 🖤";
+        return;
+    }
+
+    if (choice === "") {
+        message.textContent =
+            "Kies eers jou gunsteling foto, mooi man. 💗";
+        return;
+    }
+
+    favoriteChosen = true;
+
+    message.textContent =
+        "Foto " + choice + "? Awww, my Lyfie het 'n gunsteling! 💋";
+
+    document.getElementById("return-home-button").disabled = false;
+
+    document.getElementById("return-home-button").textContent =
+        "Terug na die homescreen 💗";
+}
+
+
+function closeSecretScreens() {
+    document.getElementById("password-screen")
+        .classList.remove("visible");
+
+    document.getElementById("secret-gallery")
+        .classList.remove("visible");
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+</script>
+
+</body>
+</html>
